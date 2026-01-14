@@ -1,8 +1,8 @@
-\# Top-Down Bullet Hell Multiplayer
+# Top-Down Bullet Hell Multiplayer
 
 
 
-\## Kurzbeschreibung
+## Kurzbeschreibung
 
 Ein 2-Spieler Online Bullet-Hell-Spiel aus der Top-Down-Perspektive.
 
@@ -14,31 +14,13 @@ Das Spiel nutzt ein server-autoritäres Multiplayer-System auf Basis von FishNet
 
 
 
-\## Technologie
+## Technologie
 
-\- Unity 6000.0.x
+- Unity 6000.0.x
 
-\- FishNet Networking
+- FishNet Networking
 
-\- GitHub Desktop
-
-
-
----
-
-
-
-\## Spiel starten (Host \& Client)
-
-1\. Projekt in Unity öffnen
-
-2\. Multiplayer Play Mode aktivieren
-
-3\. Instance 1: Host starten
-
-4\. Instance 2: Client starten
-
-5\. Verbindung erfolgt über FishNetHUD
+- GitHub Desktop
 
 
 
@@ -46,57 +28,17 @@ Das Spiel nutzt ein server-autoritäres Multiplayer-System auf Basis von FishNet
 
 
 
-\## Technischer Überblick
+## Spiel starten (Host \& Client)
 
+1. Projekt in Unity öffnen
 
+2. Multiplayer Play Mode aktivieren
 
-\### Multiplayer
+3. Instance 1: Host starten
 
-\- Server-autoritäres Modell
+4. Instance 2: Client starten
 
-\- FishNet NetworkManager
-
-\- Player als NetworkObject
-
-
-
-\### Verwendete RPCs
-
-\- ServerRpc: Spielerbewegung
-
-\- ServerRpc: Projektil-Spawn
-
-\- ObserversRpc: visuelle Effekte
-
-
-
-\### SyncVars
-
-\- Player Health
-
-\- Player Color / Name
-
-\- Score
-
-
-
-\### Bullet-Logik
-
-\- Projektile werden serverseitig gespawnt
-
-\- Mehrere Bullet-Patterns (z. B. Gerade / Spread)
-
-\- Treffererkennung auf dem Server
-
-
-
-\### Gegner-Logik
-
-\- Gegner werden serverseitig gespawnt
-
-\- Unterschiedliche Gegnertypen
-
-\- Wave-System oder Boss-Mechanik
+5. Verbindung erfolgt über FishNetHUD
 
 
 
@@ -104,13 +46,57 @@ Das Spiel nutzt ein server-autoritäres Multiplayer-System auf Basis von FishNet
 
 
 
-\## HUD \& Punkte
+## Technischer Überblick
 
-\- Anzeige von HP und Score
 
-\- Synchronisierte Punktevergabe
 
-\- Highscore-System (siehe Persistenz)
+### Multiplayer
+
+- Server-autoritäres Modell
+
+- FishNet NetworkManager
+
+- Player als NetworkObject
+
+
+
+### Verwendete RPCs
+
+- ServerRpc: Spielerbewegung
+
+- ServerRpc: Projektil-Spawn
+
+- ObserversRpc: visuelle Effekte
+
+
+
+### SyncVars
+
+- Player Health
+
+- Player Color / Name
+
+- Score
+
+
+
+### Bullet-Logik
+
+- Projektile werden serverseitig gespawnt
+
+- Mehrere Bullet-Patterns (z. B. Gerade / Spread)
+
+- Treffererkennung auf dem Server
+
+
+
+### Gegner-Logik
+
+- Gegner werden serverseitig gespawnt
+
+- Unterschiedliche Gegnertypen
+
+- Wave-System oder Boss-Mechanik
 
 
 
@@ -118,21 +104,13 @@ Das Spiel nutzt ein server-autoritäres Multiplayer-System auf Basis von FishNet
 
 
 
-\## Persistenz
+## HUD \& Punkte
 
-\- Highscore-Speicherung via (PHP \& SQL / JSON / PlayerPrefs)
+- Anzeige von HP und Score
 
-\- Serverseitige Verwaltung
+- Synchronisierte Punktevergabe
 
-
-
----
-
-
-
-\## Bonusfeatures
-
-\- (wird ergänzt)
+- Highscore-System (siehe Persistenz)
 
 
 
@@ -140,9 +118,11 @@ Das Spiel nutzt ein server-autoritäres Multiplayer-System auf Basis von FishNet
 
 
 
-\## Bekannte Bugs / Einschränkungen
+## Persistenz
 
-\- (wird ergänzt)
+- Highscore-Speicherung via (PHP \& SQL / JSON / PlayerPrefs)
+
+- Serverseitige Verwaltung
 
 
 
@@ -150,7 +130,27 @@ Das Spiel nutzt ein server-autoritäres Multiplayer-System auf Basis von FishNet
 
 
 
-\## Projektstatus
+## Bonusfeatures
+
+- (wird ergänzt)
+
+
+
+---
+
+
+
+## Bekannte Bugs / Einschränkungen
+
+- (wird ergänzt)
+
+
+
+---
+
+
+
+## Projektstatus
 
 🔧 In Entwicklung
 
