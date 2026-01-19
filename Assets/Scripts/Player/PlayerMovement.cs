@@ -14,11 +14,9 @@ public class PlayerMovement : NetworkBehaviour
     public override void OnStartClient()
     {
         base.OnStartClient();
-
         // This prevents from moving other players' objects.
         if (!IsOwner)
             return;
-
             GetComponent<PlayerInput>().enabled = true;
             TimeManager.OnTick += OnTick;
     }
