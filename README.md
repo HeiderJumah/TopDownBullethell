@@ -142,7 +142,7 @@ Das Spiel nutzt ein server-autoritäres Multiplayer-System auf Basis von FishNet
 
 ## Bekannte Bugs / Einschränkungen
 
-- (wird ergänzt)
+- Für Entwicklungs- und Testzwecke wird das mitgelieferte FishNet Network HUD verwendet.“
 
 
 
