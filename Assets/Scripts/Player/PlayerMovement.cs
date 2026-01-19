@@ -1,5 +1,8 @@
 using FishNet.Object;
+using Unity.VisualScripting;
+using UnityEditor.PackageManager;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 // Inherit from NetworkBehaviour instead of MonoBehaviour
@@ -10,8 +13,14 @@ public class PlayerMovement : NetworkBehaviour
 
     public override void OnStartClient()
     {
-        if (IsOwner)
+        base.OnStartClient();
+
+        // This prevents from moving other players' objects.
+        if (!IsOwner)
+            return;
+
             GetComponent<PlayerInput>().enabled = true;
+            TimeManager.OnTick += OnTick;
     }
 
     public void OnMove(InputValue value)
@@ -19,18 +28,18 @@ public class PlayerMovement : NetworkBehaviour
         _currentMovementInput = value.Get<Vector2>();
     }
 
-    public void Update()
+    [ServerRpc]
+    private void MoveServerRpc(Vector3 direction)
     {
-        // Only run this code on the object the local client owns.
-        // This prevents us from moving other players' objects.
-        if (!IsOwner)
-            return;
+        transform.position += MoveSpeed * (float)TimeManager.TickDelta * direction;
+    }
 
+    private void OnTick()
+    {
         Vector3 moveDirection = new Vector3(_currentMovementInput.x, 0f, _currentMovementInput.y);
         if (moveDirection.magnitude > 1f)
             moveDirection.Normalize();
-
-        transform.position += MoveSpeed * Time.deltaTime * moveDirection;
+        MoveServerRpc(moveDirection);
     }
 }
 
