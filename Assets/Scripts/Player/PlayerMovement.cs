@@ -39,11 +39,6 @@ public class PlayerMovement : NetworkBehaviour
             moveDirection.Normalize();
         MoveServerRpc(moveDirection);
 
-        if (IsOwner && Input.GetKeyDown(KeyCode.Space))
-        {
-            GetComponent<PlayerStats>().TakeDamageServerRpc(10);
-        }
-
     }
 }
 

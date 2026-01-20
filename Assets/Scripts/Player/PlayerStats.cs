@@ -45,9 +45,17 @@ public class PlayerStats : NetworkBehaviour
             renderer.material.color = color;
     }
 
-    [ServerRpc]
+    public void TakeDamage(int damage)
+    {
+        if (!IsServerInitialized)
+            return;
+
+        Health.Value = Mathf.Max(Health.Value - damage, 0);
+    }
+
+    [ServerRpc(RequireOwnership = false)]
     public void TakeDamageServerRpc(int damage)
     {
-        Health.Value = Mathf.Max(Health.Value - damage, 0);
+        TakeDamage(damage);
     }
 }

@@ -7,28 +7,35 @@ public class Projectile : NetworkBehaviour
     [SerializeField] private float lifetime = 3f;
     [SerializeField] private int damage = 10;
 
+    private Vector3 moveDirection;
+
     public override void OnStartServer()
     {
         base.OnStartServer();
+
+        // Richtung EINMAL festlegen
+        moveDirection = transform.forward;
+
         Invoke(nameof(DespawnSelf), lifetime);
     }
 
     private void Update()
     {
-        if (!IsServer)
+        if (!IsServerInitialized)
             return;
 
-        transform.position += transform.forward * speed * Time.deltaTime;
+        transform.position += moveDirection * speed * Time.deltaTime;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!IsServer)
+        if (!IsServerInitialized)
             return;
 
         if (other.TryGetComponent<PlayerStats>(out var stats))
         {
-            stats.TakeDamageServerRpc(damage);
+            stats.TakeDamage(damage);
+            Debug.Log("Projectile hit player");
             DespawnSelf();
         }
     }
@@ -38,4 +45,5 @@ public class Projectile : NetworkBehaviour
         Despawn(gameObject);
     }
 }
+
 
