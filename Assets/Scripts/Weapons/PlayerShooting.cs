@@ -15,8 +15,11 @@ public class PlayerShooting : NetworkBehaviour
     [SerializeField] private float spreadAngle = 10f;
     [SerializeField] private float spiralRotationSpeed = 100f;
 
+    [Header("Projectile Settings")]
+    [SerializeField] private float straightBulletSpeed = 15f;
+    [SerializeField] private float spreadBulletSpeed = 10f;
 
-
+    // Zeitstempel für das nächste erlaubte Schießen
     private float nextFireTime;
 
     private void Update()
@@ -27,6 +30,7 @@ public class PlayerShooting : NetworkBehaviour
         HandleInput();
     }
 
+    // Eingabeverarbeitung für das Schießen
     private void HandleInput()
     {
         var keyboard = Keyboard.current;
@@ -47,6 +51,7 @@ public class PlayerShooting : NetworkBehaviour
         }
     }
 
+    // ServerRpc zum Handhaben des Schießens
     [ServerRpc]
     private void ShootServerRpc(BulletPatternType pattern)
     {
@@ -61,11 +66,13 @@ public class PlayerShooting : NetworkBehaviour
         }
     }
 
+    // Straight Schussmuster
     private void FireStraight()
     {
-        SpawnProjectile(firePoint.rotation);
+        SpawnProjectile(firePoint.rotation, straightBulletSpeed);
     }
 
+    // Spread Schussmuster
     private void FireSpread()
     {
         float[] angles = { -10f, 0f, 10f };
@@ -73,16 +80,20 @@ public class PlayerShooting : NetworkBehaviour
         foreach (float angle in angles)
         {
             Quaternion rot = firePoint.rotation * Quaternion.Euler(0f, angle, 0f);
-            SpawnProjectile(rot);
+            SpawnProjectile(rot, spreadBulletSpeed);
         }
     }
 
-    private void SpawnProjectile(Quaternion rotation)
+    // Hilfsmethode zum Spawnen von Projektilen
+    private void SpawnProjectile(Quaternion rotation, float speed)
     {
         GameObject projectile = Instantiate(
             projectilePrefab,
             firePoint.position,
             rotation);
+
+        var proj = projectile.GetComponent<Projectile>();
+        proj.Initialize(rotation * Vector3.forward, speed);
 
         Spawn(projectile);
     }

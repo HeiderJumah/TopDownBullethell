@@ -3,12 +3,20 @@ using UnityEngine;
 
 public class Projectile : NetworkBehaviour
 {
-    [SerializeField] private float speed = 12f;
+    [SerializeField] private float speed = 20f;
     [SerializeField] private float lifetime = 3f;
     [SerializeField] private int damage = 10;
 
     private Vector3 moveDirection;
 
+    // Wird vom Server beim Spawn gesetzt 
+    // Speed & Direction serverseitig initialisieren 
+    // damit Clients die Werte nicht manipulieren können und Cheats vermeiden
+    public void Initialize(Vector3 direction, float projectileSpeed)
+    {
+        moveDirection = direction.normalized;
+        speed = projectileSpeed;
+    }
     public override void OnStartServer()
     {
         base.OnStartServer();
