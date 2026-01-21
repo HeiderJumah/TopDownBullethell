@@ -7,12 +7,14 @@ public class PlayerShooting : NetworkBehaviour
     [Header("General")]
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private Transform firePoint;
-    [SerializeField] private float fireCooldown = 0.4f;
+    [SerializeField] private float fireCooldown = 1f;
 
     [Header("Patterns")]
     [SerializeField] private BulletPatternType currentPattern = BulletPatternType.Straight;
-    [SerializeField] private int spreadBulletCount = 5;
-    [SerializeField] private float spreadAngle = 30f;
+    [SerializeField] private int spreadBulletCount = 3;
+    [SerializeField] private float spreadAngle = 10f;
+    [SerializeField] private float spiralRotationSpeed = 100f;
+
 
 
     private float nextFireTime;
@@ -30,18 +32,18 @@ public class PlayerShooting : NetworkBehaviour
         var keyboard = Keyboard.current;
         var mouse = Mouse.current;
 
-        // Pattern wechseln
-        if (keyboard.digit1Key.wasPressedThisFrame)
-            currentPattern = BulletPatternType.Straight;
-
-        if (keyboard.digit2Key.wasPressedThisFrame)
-            currentPattern = BulletPatternType.Spread;
-
-        // Schießen
+        //Sraight Schießen mit linker Maustaste
         if (mouse.leftButton.isPressed && Time.time >= nextFireTime)
         {
             nextFireTime = Time.time + fireCooldown;
-            ShootServerRpc(currentPattern);
+            ShootServerRpc(BulletPatternType.Straight);
+        }
+
+        // Spread Schießen mit rechter Maustaste
+        if (mouse.rightButton.isPressed && Time.time >= nextFireTime)
+        {
+            nextFireTime = Time.time + fireCooldown;
+            ShootServerRpc(BulletPatternType.Spread);
         }
     }
 
@@ -66,12 +68,10 @@ public class PlayerShooting : NetworkBehaviour
 
     private void FireSpread()
     {
-        float step = spreadAngle / (spreadBulletCount - 1);
-        float startAngle = -spreadAngle / 2f;
+        float[] angles = { -10f, 0f, 10f };
 
-        for (int i = 0; i < spreadBulletCount; i++)
+        foreach (float angle in angles)
         {
-            float angle = startAngle + step * i;
             Quaternion rot = firePoint.rotation * Quaternion.Euler(0f, angle, 0f);
             SpawnProjectile(rot);
         }
