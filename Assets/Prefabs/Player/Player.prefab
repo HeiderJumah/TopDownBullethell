@@ -66,7 +66,7 @@ Transform:
   m_GameObject: {fileID: 3415247483878572993}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: -17}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -172,6 +172,7 @@ MonoBehaviour:
   - {fileID: -2474268945858005907}
   - {fileID: -426808841114510881}
   - {fileID: -6149953629958998353}
+  - {fileID: 8476513785935324827}
   InitializedParentNetworkBehaviour: {fileID: 0}
   InitializedNestedNetworkObjects: []
   RuntimeParentNetworkBehaviour: {fileID: 0}
@@ -182,7 +183,7 @@ MonoBehaviour:
   _initializeOrder: 0
   _preventDespawnOnDisconnect: 0
   _defaultDespawnType: 0
-  _initializedTimestamp: -8584326924255781586
+  _initializedTimestamp: -8584326006165083379
   NetworkObserver: {fileID: 0}
   _enablePrediction: 0
   _predictionType: 0
@@ -203,7 +204,7 @@ MonoBehaviour:
   <AssetPathHash>k__BackingField: 5306845881338098766
   SceneId: 0
   SerializedTransformProperties:
-    Position: {x: 1151.7755, y: 412.3587, z: 158.4939}
+    Position: {x: 0, y: 0, z: 0}
     Rotation: {x: 0, y: 0, z: 0, w: 1}
     Scale: {x: 1, y: 1, z: 1}
     IsValid: 1
@@ -311,12 +312,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f83a6c73ba12c784faa605381963e8e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentIndexCache: 255
+  _componentIndexCache: 4
   _addedNetworkObject: {fileID: 7505088725561918322}
-  _networkObjectCache: {fileID: 0}
+  _networkObjectCache: {fileID: 7505088725561918322}
   projectilePrefab: {fileID: 9180275668046681882, guid: bbfe3820ad9127744822b00556f03897, type: 3}
   firePoint: {fileID: 5766876063342060701}
   fireCooldown: 0.4
+  currentPattern: 0
+  spreadBulletCount: 3
+  spreadAngle: 10
+  spiralRotationSpeed: 100
+  straightBulletSpeed: 15
+  spreadBulletSpeed: 10
 --- !u!114 &-6815618294575060930
 MonoBehaviour:
   m_ObjectHideFlags: 0
