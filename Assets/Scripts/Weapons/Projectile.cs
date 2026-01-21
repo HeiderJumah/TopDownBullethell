@@ -46,6 +46,12 @@ public class Projectile : NetworkBehaviour
             Debug.Log("Projectile hit player");
             DespawnSelf();
         }
+
+        if (other.TryGetComponent<EnemyStats>(out var enemy))
+        {
+            enemy.TakeDamage(damage);
+            DespawnSelf();
+        }
     }
 
     private void DespawnSelf()
