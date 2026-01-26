@@ -6,13 +6,16 @@ public class PlayerStats : NetworkBehaviour
 {
     // SyncVars als Wrapper
     public readonly SyncVar<int> Health = new SyncVar<int>();
+
+    [SerializeField] private int maxHealth = 100;
+
     public readonly SyncVar<Color> PlayerColor = new SyncVar<Color>();
 
     public override void OnStartServer()
     {
         base.OnStartServer();
 
-        Health.Value = 100;
+        Health.Value = maxHealth;
         PlayerColor.Value = Random.ColorHSV();
     }
 
@@ -51,6 +54,15 @@ public class PlayerStats : NetworkBehaviour
             return;
 
         Health.Value = Mathf.Max(Health.Value - damage, 0);
+
+        if (Health.Value <= 0)
+            Die();
+    }
+
+    private void Die()
+    {
+        Debug.Log("Player died");
+        GameManager.Instance.PlayerDied();
     }
 
     [ServerRpc(RequireOwnership = false)]
@@ -58,4 +70,5 @@ public class PlayerStats : NetworkBehaviour
     {
         TakeDamage(damage);
     }
+
 }

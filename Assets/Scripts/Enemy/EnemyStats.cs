@@ -57,8 +57,6 @@ public class EnemyStats : NetworkBehaviour
 
         enemyRenderer.material.color = Color.red;
         Invoke(nameof(ResetColor), 0.1f);
-        Debug.Log("Enemy flash triggered"); //test test tessst
-
     }
 
     private void ResetColor()

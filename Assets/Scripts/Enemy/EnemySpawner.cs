@@ -44,8 +44,10 @@ public class EnemySpawner : NetworkBehaviour
         if (currentWaveIndex >= waves.Length)
         {
             Debug.Log("All waves completed");
+            GameManager.Instance.Victory();
             return;
         }
+
 
         WaveData wave = waves[currentWaveIndex];
         aliveEnemies = wave.enemyCount;
