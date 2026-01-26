@@ -8,7 +8,9 @@ public class EnemySpawner : NetworkBehaviour
 
     public override void OnStartServer()
     {
-        base.OnStartServer();
+        if (!IsServerInitialized)
+            return;
+
         SpawnWave(3);
     }
 
