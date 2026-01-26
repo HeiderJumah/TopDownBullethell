@@ -54,9 +54,13 @@ public class PlayerStats : NetworkBehaviour
             return;
 
         Health.Value = Mathf.Max(Health.Value - damage, 0);
+        Debug.Log($"Player took damage. HP: {Health.Value}");
 
         if (Health.Value <= 0)
             Die();
+
+        if (GameManager.Instance.CurrentState != GameState.Playing)
+            return;
     }
 
     private void Die()
