@@ -12,8 +12,7 @@ public class PlayerShooting : NetworkBehaviour
     [Header("Patterns")]
     [SerializeField] private BulletPatternType currentPattern = BulletPatternType.Straight;
     [SerializeField] private int spreadBulletCount = 3;
-    [SerializeField] private float spreadAngle = 10f;
-    [SerializeField] private float spiralRotationSpeed = 100f;
+    [SerializeField] private float spreadAngle = 20f;
 
     [Header("Projectile Settings")]
     [SerializeField] private float straightBulletSpeed = 30f;

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Projectile : NetworkBehaviour
 {
-    [SerializeField] private float speed = 30f;
+    [SerializeField] private float speed = 20f;
     [SerializeField] private float lifetime = 15f;
     [SerializeField] private int damage = 10;
 

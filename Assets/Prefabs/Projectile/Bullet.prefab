@@ -70,7 +70,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c196d6e263c0bed4dac350f17a1f45c4, type: 2}
+  - {fileID: 2100000, guid: c031fd1b46f2b3947bd71330ec2da187, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -172,7 +172,7 @@ MonoBehaviour:
   _initializeOrder: 0
   _preventDespawnOnDisconnect: 0
   _defaultDespawnType: 0
-  _initializedTimestamp: -8584321414000224520
+  _initializedTimestamp: -8584321367246759065
   NetworkObserver: {fileID: 0}
   _enablePrediction: 0
   _predictionType: 0

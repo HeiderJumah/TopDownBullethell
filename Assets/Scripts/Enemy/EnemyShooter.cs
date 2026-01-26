@@ -7,6 +7,7 @@ public class EnemyShooter : NetworkBehaviour
     [SerializeField] private Transform firePoint;
     [SerializeField] private float fireCooldown = 1.5f;
 
+
     private float fireTimer;
 
     public override void OnStartServer()
