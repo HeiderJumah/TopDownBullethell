@@ -7,7 +7,7 @@ public class PlayerShooting : NetworkBehaviour
     [Header("General")]
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private Transform firePoint;
-    [SerializeField] private float fireCooldown = 1f;
+    [SerializeField] private float fireCooldown = 0.5f;
 
     [Header("Patterns")]
     [SerializeField] private BulletPatternType currentPattern = BulletPatternType.Straight;
@@ -16,8 +16,8 @@ public class PlayerShooting : NetworkBehaviour
     [SerializeField] private float spiralRotationSpeed = 100f;
 
     [Header("Projectile Settings")]
-    [SerializeField] private float straightBulletSpeed = 15f;
-    [SerializeField] private float spreadBulletSpeed = 10f;
+    [SerializeField] private float straightBulletSpeed = 30f;
+    [SerializeField] private float spreadBulletSpeed = 20f;
 
     // Zeitstempel für das nächste erlaubte Schießen
     private float nextFireTime;

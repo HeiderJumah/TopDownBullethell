@@ -20,6 +20,15 @@ public class EnemyStats : NetworkBehaviour
             originalColor = enemyRenderer.material.color;
     }
 
+    public void Initialize(int maxHealth)
+    {
+        if (!IsServerInitialized)
+            return;
+
+        Health.Value = maxHealth;
+    }
+
+
     public void TakeDamage(int damage)
     {
         if (!IsServerInitialized)

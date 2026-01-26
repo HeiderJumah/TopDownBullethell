@@ -10,6 +10,16 @@ public class EnemySpawner : NetworkBehaviour
     private int aliveEnemies = 0;
     private bool wavesStarted = false;
 
+    [System.Serializable]
+    public struct WaveData
+    {
+        public int enemyCount;
+        public int enemyHealth;
+    }
+    
+    [SerializeField] private WaveData[] waves;
+
+
     public override void OnStartServer()
     {
         base.OnStartServer();
@@ -26,13 +36,21 @@ public class EnemySpawner : NetworkBehaviour
         SpawnWave();
     }
 
+    private int currentWaveIndex = 0;
+
     [Server]
     private void SpawnWave()
     {
-        int enemyCount = currentWave * 2;
-        aliveEnemies = enemyCount;
+        if (currentWaveIndex >= waves.Length)
+        {
+            Debug.Log("All waves completed");
+            return;
+        }
 
-        for (int i = 0; i < enemyCount; i++)
+        WaveData wave = waves[currentWaveIndex];
+        aliveEnemies = wave.enemyCount;
+
+        for (int i = 0; i < wave.enemyCount; i++)
         {
             Transform point = spawnPoints[i % spawnPoints.Length];
 
@@ -42,9 +60,12 @@ public class EnemySpawner : NetworkBehaviour
                 Quaternion.identity);
 
             Spawn(enemy);
+
+            EnemyStats stats = enemy.GetComponent<EnemyStats>();
+            stats.Initialize(wave.enemyHealth);
         }
 
-        currentWave++;
+        currentWaveIndex++;
     }
 
     private void HandleEnemyDeath(EnemyStats enemy)
@@ -59,6 +80,7 @@ public class EnemySpawner : NetworkBehaviour
             SpawnWave();
         }
     }
+
 
     public override void OnStopServer()
     {
