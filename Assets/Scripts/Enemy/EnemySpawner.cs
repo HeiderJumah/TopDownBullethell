@@ -43,11 +43,12 @@ public class EnemySpawner : NetworkBehaviour
     {
         if (currentWaveIndex >= waves.Length)
         {
-            Debug.Log("All waves completed");
+            Debug.Log("All WAVES CLEAR");
             GameManager.Instance.Victory();
             return;
         }
 
+        Debug.Log($"WAVE {currentWaveIndex + 1} START");
 
         WaveData wave = waves[currentWaveIndex];
         aliveEnemies = wave.enemyCount;
@@ -72,15 +73,19 @@ public class EnemySpawner : NetworkBehaviour
 
     private void HandleEnemyDeath(EnemyStats enemy)
     {
-        if (!IsServerInitialized)
-            return;
-
-        aliveEnemies--;
-
-        if (aliveEnemies <= 0)
         {
-            SpawnWave();
+            if (!IsServerInitialized)
+                return;
+
+            aliveEnemies--;
+
+            if (aliveEnemies <= 0)
+            {
+                Debug.Log($"WAVE {currentWaveIndex} CLEAR");
+                SpawnWave();
+            }
         }
+
     }
 
 
