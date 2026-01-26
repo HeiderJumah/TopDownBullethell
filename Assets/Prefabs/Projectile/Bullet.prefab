@@ -172,7 +172,7 @@ MonoBehaviour:
   _initializeOrder: 0
   _preventDespawnOnDisconnect: 0
   _defaultDespawnType: 0
-  _initializedTimestamp: -8584321719402363871
+  _initializedTimestamp: -8584321645368167965
   NetworkObserver: {fileID: 0}
   _enablePrediction: 0
   _predictionType: 0
@@ -188,7 +188,7 @@ MonoBehaviour:
   _spectatorInterpolation: 2
   _enableTeleport: 0
   _teleportThreshold: 1
-  <PrefabId>k__BackingField: 3
+  <PrefabId>k__BackingField: 8
   <SpawnableCollectionId>k__BackingField: 0
   <AssetPathHash>k__BackingField: 8871562835365597452
   SceneId: 0
@@ -273,6 +273,6 @@ MonoBehaviour:
   _componentIndexCache: 2
   _addedNetworkObject: {fileID: 6020623317822237998}
   _networkObjectCache: {fileID: 6020623317822237998}
-  speed: 12
-  lifetime: 3
+  speed: 30
+  lifetime: 15
   damage: 10

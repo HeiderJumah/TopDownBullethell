@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 // Inherit from NetworkBehaviour instead of MonoBehaviour
 public class PlayerMovement : NetworkBehaviour
 {
-    public float MoveSpeed = 5f;
+    public float MoveSpeed = 3f;
     private Vector2 _currentMovementInput;
 
     public override void OnStartClient()
