@@ -6,17 +6,31 @@ public class EnemySpawner : NetworkBehaviour
     [SerializeField] private GameObject enemyPrefab;
     [SerializeField] private Transform[] spawnPoints;
 
+    private int currentWave = 1;
+    private bool wavesStarted = false;
+
     public override void OnStartServer()
     {
-        if (!IsServerInitialized)
-            return;
-
-        SpawnWave(3);
+        base.OnStartServer();
+        // bewusst leer
     }
 
-    private void SpawnWave(int count)
+    [Server]
+    public void StartWaves()
     {
-        for (int i = 0; i < count; i++)
+        if (wavesStarted)
+            return;
+
+        wavesStarted = true;
+        SpawnWave();
+    }
+
+    [Server]
+    private void SpawnWave()
+    {
+        int enemyCount = currentWave * 2;
+
+        for (int i = 0; i < enemyCount; i++)
         {
             Transform point = spawnPoints[i % spawnPoints.Length];
 
@@ -27,6 +41,9 @@ public class EnemySpawner : NetworkBehaviour
 
             Spawn(enemy);
         }
+
+        currentWave++;
     }
 }
+
 
