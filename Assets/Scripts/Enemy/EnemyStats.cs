@@ -4,12 +4,20 @@ using UnityEngine;
 
 public class EnemyStats : NetworkBehaviour
 {
+    public static System.Action<EnemyStats> OnEnemyDied;
+
     public readonly SyncVar<int> Health = new SyncVar<int>();
 
-    public override void OnStartServer()
+    private Renderer enemyRenderer;
+    private Color originalColor;
+
+    public override void OnStartClient()
     {
-        base.OnStartServer();
-        Health.Value = 30;
+        base.OnStartClient();
+
+        enemyRenderer = GetComponentInChildren<Renderer>();
+        if (enemyRenderer != null)
+            originalColor = enemyRenderer.material.color;
     }
 
     public void TakeDamage(int damage)
@@ -19,13 +27,42 @@ public class EnemyStats : NetworkBehaviour
 
         Health.Value -= damage;
 
+        FlashObserversRpc();
+
         if (Health.Value <= 0)
             Die();
     }
 
+    [ObserversRpc]
+    private void FlashObserversRpc()
+    {
+        if (enemyRenderer == null)
+        {
+            enemyRenderer = GetComponentInChildren<Renderer>();
+            if (enemyRenderer != null)
+                originalColor = enemyRenderer.material.color;
+        }
+
+        if (enemyRenderer == null)
+            return;
+
+        enemyRenderer.material.color = Color.red;
+        Invoke(nameof(ResetColor), 0.1f);
+        Debug.Log("Enemy flash triggered"); //test test tessst
+
+    }
+
+    private void ResetColor()
+    {
+        if (enemyRenderer != null)
+            enemyRenderer.material.color = originalColor;
+    }
+
     private void Die()
     {
+        OnEnemyDied?.Invoke(this);
         Despawn(gameObject);
     }
+
 }
 

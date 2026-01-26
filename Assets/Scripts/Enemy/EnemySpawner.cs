@@ -7,12 +7,13 @@ public class EnemySpawner : NetworkBehaviour
     [SerializeField] private Transform[] spawnPoints;
 
     private int currentWave = 1;
+    private int aliveEnemies = 0;
     private bool wavesStarted = false;
 
     public override void OnStartServer()
     {
         base.OnStartServer();
-        // bewusst leer
+        EnemyStats.OnEnemyDied += HandleEnemyDeath;
     }
 
     [Server]
@@ -29,6 +30,7 @@ public class EnemySpawner : NetworkBehaviour
     private void SpawnWave()
     {
         int enemyCount = currentWave * 2;
+        aliveEnemies = enemyCount;
 
         for (int i = 0; i < enemyCount; i++)
         {
@@ -44,6 +46,26 @@ public class EnemySpawner : NetworkBehaviour
 
         currentWave++;
     }
+
+    private void HandleEnemyDeath(EnemyStats enemy)
+    {
+        if (!IsServerInitialized)
+            return;
+
+        aliveEnemies--;
+
+        if (aliveEnemies <= 0)
+        {
+            SpawnWave();
+        }
+    }
+
+    public override void OnStopServer()
+    {
+        base.OnStopServer();
+        EnemyStats.OnEnemyDied -= HandleEnemyDeath;
+    }
+
 }
 
 

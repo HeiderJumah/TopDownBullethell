@@ -4,7 +4,7 @@ using UnityEngine;
 public class Projectile : NetworkBehaviour
 {
     [SerializeField] private float speed = 20f;
-    [SerializeField] private float lifetime = 3f;
+    [SerializeField] private float lifetime = 8f;
     [SerializeField] private int damage = 10;
 
     private Vector3 moveDirection;
