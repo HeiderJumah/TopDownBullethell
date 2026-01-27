@@ -17,8 +17,8 @@ public class PlayerMovement : NetworkBehaviour
         // This prevents from moving other players' objects.
         if (!IsOwner)
             return;
-            GetComponent<PlayerInput>().enabled = true;
-            TimeManager.OnTick += OnTick;
+        GetComponent<PlayerInput>().enabled = true;
+        TimeManager.OnTick += OnTick;
     }
 
     public void OnMove(InputValue value)
@@ -41,4 +41,3 @@ public class PlayerMovement : NetworkBehaviour
 
     }
 }
-
