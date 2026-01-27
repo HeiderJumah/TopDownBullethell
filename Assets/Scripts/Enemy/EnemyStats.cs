@@ -68,6 +68,7 @@ public class EnemyStats : NetworkBehaviour
     private void Die()
     {
         OnEnemyDied?.Invoke(this);
+        ScoreManager.Instance.AddScore(1);
         Despawn(gameObject);
     }
 
