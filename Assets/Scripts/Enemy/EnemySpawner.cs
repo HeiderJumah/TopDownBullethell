@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class EnemySpawner : NetworkBehaviour
 {
-    [SerializeField] private GameObject enemyPrefab;
+    [SerializeField] private GameObject shooterEnemyPrefab;
+    [SerializeField] private GameObject kamikazeEnemyPrefab;
     [SerializeField] private Transform[] spawnPoints;
 
     private int currentWave = 1;
@@ -57,10 +58,22 @@ public class EnemySpawner : NetworkBehaviour
         {
             Transform point = spawnPoints[i % spawnPoints.Length];
 
+            GameObject prefabToSpawn;
+
+            if (currentWaveIndex < 2)
+            {
+                prefabToSpawn = shooterEnemyPrefab;
+            }
+            else
+            {
+                prefabToSpawn = kamikazeEnemyPrefab;
+            }
+
             GameObject enemy = Instantiate(
-                enemyPrefab,
+                prefabToSpawn,
                 point.position,
                 Quaternion.identity);
+
 
             Spawn(enemy);
 

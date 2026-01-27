@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class EnemyMovement : NetworkBehaviour
 {
-    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private float moveSpeed = 10f;
 
     private void Update()
     {

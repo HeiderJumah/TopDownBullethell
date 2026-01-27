@@ -48,9 +48,9 @@ GameObject:
   - component: {fileID: 6195351872386062161}
   - component: {fileID: -6083839562107699106}
   - component: {fileID: 8489144859085018929}
-  - component: {fileID: 9199589912204424030}
+  - component: {fileID: 2504425182743019472}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: EnemyKamikaze
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -103,7 +103,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2abd0bedd4748c94ca742aee00898547, type: 2}
+  - {fileID: 2100000, guid: 82f96984142977143b35027be99a94cb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -140,7 +140,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -195,7 +195,7 @@ MonoBehaviour:
   - {fileID: 6195351872386062161}
   - {fileID: -6083839562107699106}
   - {fileID: 8489144859085018929}
-  - {fileID: 9199589912204424030}
+  - {fileID: 0}
   InitializedParentNetworkBehaviour: {fileID: 0}
   InitializedNestedNetworkObjects: []
   RuntimeParentNetworkBehaviour: {fileID: 0}
@@ -224,7 +224,7 @@ MonoBehaviour:
   _teleportThreshold: 1
   <PrefabId>k__BackingField: 1
   <SpawnableCollectionId>k__BackingField: 0
-  <AssetPathHash>k__BackingField: 4663917283090986135
+  <AssetPathHash>k__BackingField: 8775238856048774949
   SceneId: 0
   SerializedTransformProperties:
     Position: {x: 0, y: 0.5, z: 0}
@@ -308,7 +308,7 @@ MonoBehaviour:
   _addedNetworkObject: {fileID: 2204143457549726216}
   _networkObjectCache: {fileID: 2204143457549726216}
   moveSpeed: 7
---- !u!114 &9199589912204424030
+--- !u!114 &2504425182743019472
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -317,12 +317,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1684002775884518972}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63391a38dff03374a948441f062ad7ff, type: 3}
+  m_Script: {fileID: 11500000, guid: 5017ae9c0343d6d47b9c14ce44eccaf0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentIndexCache: 3
+  _componentIndexCache: 255
   _addedNetworkObject: {fileID: 2204143457549726216}
-  _networkObjectCache: {fileID: 2204143457549726216}
-  projectilePrefab: {fileID: 9180275668046681882, guid: 8d67a93ef58c4a145ba5133f07661648, type: 3}
-  firePoint: {fileID: 7943056660564729621}
-  fireCooldown: 3
+  _networkObjectCache: {fileID: 0}
+  collisionDamage: 20
