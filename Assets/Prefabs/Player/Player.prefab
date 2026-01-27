@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 2253062046576532700}
   - component: {fileID: 7490439987482650937}
   - component: {fileID: 3850551729400786728}
+  - component: {fileID: 7298881413230732362}
   - component: {fileID: 7505088725561918322}
   - component: {fileID: 4420434972732176179}
   - component: {fileID: -2474268945858005907}
@@ -149,6 +150,33 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &7298881413230732362
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3415247483878572993}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 80
+  m_CollisionDetection: 0
 --- !u!114 &7505088725561918322
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -183,7 +211,7 @@ MonoBehaviour:
   _initializeOrder: 0
   _preventDespawnOnDisconnect: 0
   _defaultDespawnType: 0
-  _initializedTimestamp: -8584321367246759065
+  _initializedTimestamp: -8584320545394711092
   NetworkObserver: {fileID: 0}
   _enablePrediction: 0
   _predictionType: 0
@@ -199,7 +227,7 @@ MonoBehaviour:
   _spectatorInterpolation: 2
   _enableTeleport: 0
   _teleportThreshold: 1
-  <PrefabId>k__BackingField: 3
+  <PrefabId>k__BackingField: 2
   <SpawnableCollectionId>k__BackingField: 0
   <AssetPathHash>k__BackingField: 5306845881338098766
   SceneId: 0
@@ -322,7 +350,6 @@ MonoBehaviour:
   currentPattern: 0
   spreadBulletCount: 3
   spreadAngle: 20
-  spiralRotationSpeed: 100
   straightBulletSpeed: 30
   spreadBulletSpeed: 15
 --- !u!114 &-6815618294575060930
