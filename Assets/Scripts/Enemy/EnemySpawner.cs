@@ -1,5 +1,6 @@
 using FishNet.Object;
 using UnityEngine;
+using System.Collections;
 
 public class EnemySpawner : NetworkBehaviour
 {
@@ -15,6 +16,7 @@ public class EnemySpawner : NetworkBehaviour
     }
 
     [SerializeField] private WaveData[] waves;
+    [SerializeField] private float waveDelay = 2f;
 
     private int currentWaveIndex = 0;
     private int aliveEnemies = 0;
@@ -33,22 +35,22 @@ public class EnemySpawner : NetworkBehaviour
             return;
 
         wavesStarted = true;
-        Debug.Log("START WAVES");
-
-        SpawnWave();
+        StartCoroutine(SpawnWaveRoutine());
     }
 
     [Server]
-    private void SpawnWave()
+    private IEnumerator SpawnWaveRoutine()
     {
         if (currentWaveIndex >= waves.Length)
         {
-            Debug.Log("ALL WAVES CLEARED");
             GameManager.Instance.Victory();
-            return;
+            yield break;
         }
 
-        Debug.Log($"WAVE {currentWaveIndex + 1} START");
+        // UI-Event
+        WaveUI.Instance.ShowWave(currentWaveIndex + 1);
+
+        yield return new WaitForSeconds(waveDelay);
 
         WaveData wave = waves[currentWaveIndex];
         aliveEnemies = wave.enemyCount;
@@ -77,8 +79,7 @@ public class EnemySpawner : NetworkBehaviour
 
         if (aliveEnemies <= 0)
         {
-            Debug.Log($"WAVE {currentWaveIndex} CLEARED");
-            SpawnWave();
+            StartCoroutine(SpawnWaveRoutine());
         }
     }
 
@@ -88,6 +89,7 @@ public class EnemySpawner : NetworkBehaviour
         EnemyStats.OnEnemyDied -= HandleEnemyDeath;
     }
 }
+
 
 
 
