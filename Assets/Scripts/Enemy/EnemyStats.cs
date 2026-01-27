@@ -20,20 +20,15 @@ public class EnemyStats : NetworkBehaviour
             originalColor = enemyRenderer.material.color;
     }
 
+    [Server]
     public void Initialize(int maxHealth)
     {
-        if (!IsServerInitialized)
-            return;
-
         Health.Value = maxHealth;
     }
 
-
+    [Server]
     public void TakeDamage(int damage)
     {
-        if (!IsServerInitialized)
-            return;
-
         Health.Value -= damage;
 
         FlashObserversRpc();
@@ -45,13 +40,6 @@ public class EnemyStats : NetworkBehaviour
     [ObserversRpc]
     private void FlashObserversRpc()
     {
-        if (enemyRenderer == null)
-        {
-            enemyRenderer = GetComponentInChildren<Renderer>();
-            if (enemyRenderer != null)
-                originalColor = enemyRenderer.material.color;
-        }
-
         if (enemyRenderer == null)
             return;
 
@@ -65,12 +53,13 @@ public class EnemyStats : NetworkBehaviour
             enemyRenderer.material.color = originalColor;
     }
 
+    [Server]
     private void Die()
     {
         OnEnemyDied?.Invoke(this);
         ScoreManager.Instance.AddScore(1);
         Despawn(gameObject);
     }
-
 }
+
 

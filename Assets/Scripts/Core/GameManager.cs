@@ -1,4 +1,5 @@
 using FishNet.Object;
+using FishNet.Object.Synchronizing;
 using UnityEngine;
 
 public enum GameState
@@ -10,23 +11,11 @@ public enum GameState
 
 public class GameManager : NetworkBehaviour
 {
-    [SerializeField] private EnemySpawner enemySpawner;
-
-    public override void OnStartServer()
-    {
-        base.OnStartServer();
-    }
-
-    public override void OnStartClient()
-    {
-        base.OnStartServer();
-        StartGame();
-        enemySpawner.StartWaves();
-    }
-
     public static GameManager Instance;
 
-    public GameState CurrentState { get; private set; }
+    [SerializeField] private EnemySpawner enemySpawner;
+
+    public readonly SyncVar<GameState> CurrentState = new SyncVar<GameState>();
 
     private void Awake()
     {
@@ -34,31 +23,44 @@ public class GameManager : NetworkBehaviour
             Instance = this;
         else
             Destroy(gameObject);
-
-        CurrentState = GameState.Playing;
     }
 
-    public void StartGame()
+    public override void OnStartServer()
     {
-        CurrentState = GameState.Playing;
+        base.OnStartServer();
+
+        Debug.Log("SERVER STARTED");
+
+        CurrentState.Value = GameState.Playing;
         Debug.Log("GAME START");
+
+        if (enemySpawner == null)
+        {
+            Debug.LogError("EnemySpawner NOT assigned in GameManager!");
+            return;
+        }
+
+        enemySpawner.StartWaves();
     }
 
+    [Server]
     public void PlayerDied()
     {
-        if (CurrentState != GameState.Playing)
+        if (CurrentState.Value != GameState.Playing)
             return;
 
-        CurrentState = GameState.GameOver;
+        CurrentState.Value = GameState.GameOver;
         Debug.Log("GAME OVER");
     }
 
+    [Server]
     public void Victory()
     {
-        if (CurrentState != GameState.Playing)
+        if (CurrentState.Value != GameState.Playing)
             return;
 
-        CurrentState = GameState.Victory;
+        CurrentState.Value = GameState.Victory;
         Debug.Log("VICTORY");
     }
 }
+

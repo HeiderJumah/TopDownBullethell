@@ -7,19 +7,18 @@ public class EnemySpawner : NetworkBehaviour
     [SerializeField] private GameObject kamikazeEnemyPrefab;
     [SerializeField] private Transform[] spawnPoints;
 
-    private int currentWave = 1;
-    private int aliveEnemies = 0;
-    private bool wavesStarted = false;
-
     [System.Serializable]
     public struct WaveData
     {
         public int enemyCount;
         public int enemyHealth;
     }
-    
+
     [SerializeField] private WaveData[] waves;
 
+    private int currentWaveIndex = 0;
+    private int aliveEnemies = 0;
+    private bool wavesStarted = false;
 
     public override void OnStartServer()
     {
@@ -34,17 +33,17 @@ public class EnemySpawner : NetworkBehaviour
             return;
 
         wavesStarted = true;
+        Debug.Log("START WAVES");
+
         SpawnWave();
     }
-
-    private int currentWaveIndex = 0;
 
     [Server]
     private void SpawnWave()
     {
         if (currentWaveIndex >= waves.Length)
         {
-            Debug.Log("All WAVES CLEAR");
+            Debug.Log("ALL WAVES CLEARED");
             GameManager.Instance.Victory();
             return;
         }
@@ -58,23 +57,10 @@ public class EnemySpawner : NetworkBehaviour
         {
             Transform point = spawnPoints[i % spawnPoints.Length];
 
-            GameObject prefabToSpawn;
+            GameObject prefab =
+                currentWaveIndex < 2 ? shooterEnemyPrefab : kamikazeEnemyPrefab;
 
-            if (currentWaveIndex < 2)
-            {
-                prefabToSpawn = shooterEnemyPrefab;
-            }
-            else
-            {
-                prefabToSpawn = kamikazeEnemyPrefab;
-            }
-
-            GameObject enemy = Instantiate(
-                prefabToSpawn,
-                point.position,
-                Quaternion.identity);
-
-
+            GameObject enemy = Instantiate(prefab, point.position, Quaternion.identity);
             Spawn(enemy);
 
             EnemyStats stats = enemy.GetComponent<EnemyStats>();
@@ -84,30 +70,24 @@ public class EnemySpawner : NetworkBehaviour
         currentWaveIndex++;
     }
 
+    [Server]
     private void HandleEnemyDeath(EnemyStats enemy)
     {
+        aliveEnemies--;
+
+        if (aliveEnemies <= 0)
         {
-            if (!IsServerInitialized)
-                return;
-
-            aliveEnemies--;
-
-            if (aliveEnemies <= 0)
-            {
-                Debug.Log($"WAVE {currentWaveIndex} CLEAR");
-                SpawnWave();
-            }
+            Debug.Log($"WAVE {currentWaveIndex} CLEARED");
+            SpawnWave();
         }
-
     }
-
 
     public override void OnStopServer()
     {
         base.OnStopServer();
         EnemyStats.OnEnemyDied -= HandleEnemyDeath;
     }
-
 }
+
 
 

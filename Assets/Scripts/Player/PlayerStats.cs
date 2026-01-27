@@ -64,14 +64,19 @@ public class PlayerStats : NetworkBehaviour
         if (Health.Value <= 0)
             Die();
 
-        if (GameManager.Instance.CurrentState != GameState.Playing)
+        if (GameManager.Instance.CurrentState.Value != GameState.Playing)
             return;
+
     }
 
     private void Die()
     {
+        if (!IsServerInitialized)
+            return;
+
         Debug.Log("Player died");
         GameManager.Instance.PlayerDied();
+        Despawn(gameObject);
     }
 
     [ServerRpc(RequireOwnership = false)]
