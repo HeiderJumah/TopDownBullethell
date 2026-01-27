@@ -11,6 +11,8 @@ public class PlayerStats : NetworkBehaviour
 
     public readonly SyncVar<Color> PlayerColor = new SyncVar<Color>();
 
+    public static System.Action<PlayerStats> OnLocalPlayerSpawned;
+
     public override void OnStartServer()
     {
         base.OnStartServer();
@@ -22,6 +24,9 @@ public class PlayerStats : NetworkBehaviour
     public override void OnStartClient()
     {
         base.OnStartClient();
+
+        if (IsOwner)
+            OnLocalPlayerSpawned?.Invoke(this);
 
         // Listener registrieren
         Health.OnChange += OnHealthChanged;

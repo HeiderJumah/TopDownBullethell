@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using FishNet.Object;
 
 public class HUDController : MonoBehaviour
 {
@@ -8,14 +9,25 @@ public class HUDController : MonoBehaviour
 
     private PlayerStats playerStats;
 
-    private void Start()
+    private void OnEnable()
     {
-        playerStats = FindObjectOfType<PlayerStats>();
-        UpdateHP(100);
-        UpdateScore(0);
+        PlayerStats.OnLocalPlayerSpawned += BindPlayer;
+    }
 
-        ScoreManager.Instance.Score.OnChange += OnScoreChanged;
+    private void OnDisable()
+    {
+        PlayerStats.OnLocalPlayerSpawned -= BindPlayer;
+    }
+
+    private void BindPlayer(PlayerStats stats)
+    {
+        playerStats = stats;
+
+        UpdateHP(playerStats.Health.Value);
+        UpdateScore(ScoreManager.Instance.Score.Value);
+
         playerStats.Health.OnChange += OnHealthChanged;
+        ScoreManager.Instance.Score.OnChange += OnScoreChanged;
     }
 
     private void OnHealthChanged(int oldValue, int newValue, bool asServer)
@@ -38,4 +50,3 @@ public class HUDController : MonoBehaviour
         scoreText.text = $"Score: {score}";
     }
 }
-
